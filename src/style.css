@@ -1,0 +1,22 @@
+main{
+    height: 100vh;
+}
+#container{
+    height: 90%;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+form{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.container_todo{
+    width: 33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+}
