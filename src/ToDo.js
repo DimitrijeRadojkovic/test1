@@ -1,14 +1,32 @@
-import { useContext, useRef } from "react";
+import { useContext, useRef,  useState } from "react";
 import { ToDoContext } from "./App";
 
 const ToDo = ({id, text, bg}) => {
     const {toDo, setToDo} = useContext(ToDoContext);
+    const [isEditing, setEditing] = useState(false);
+    const [editedText, setEditedText] = useState(text);
 
     const deleteHandler = () => {
         const updatedToDo = toDo.filter(x => x.id !== id);
         setToDo(updatedToDo);
         console.log(toDo);
     }
+
+    const editHandler = () => {
+        setEditing(true);
+    };
+
+    const saveEditHandler = () => {
+        const updatedToDo = toDo.map(item =>
+            item.id === id ? { ...item, text: editedText } : item
+        );
+        setToDo(updatedToDo);
+        setEditing(false);
+    };
+
+    const cancelEditHandler = () => {
+        setEditing(false);
+    };
 
     const dragItem = useRef();
     const dragOverItem = useRef();
@@ -33,8 +51,23 @@ const ToDo = ({id, text, bg}) => {
 
     return (
         <div onDragStart={(e) => dragStart(e, id)} onDragEnter={(e) => dragEnter(e, id)} onDragEnd={drop}  style={{backgroundColor: bg}} id={id} draggable>
-            <p>{text}</p>
-            <button onClick={deleteHandler}>Obrisi</button>
+            {isEditing ? (
+                <>
+                    <input
+                        type="text"
+                        value={editedText}
+                        onChange={(e) => setEditedText(e.target.value)}
+                    />
+                    <button onClick={saveEditHandler}>Sacuvaj</button>
+                    <button onClick={cancelEditHandler}>Otkazi</button>
+                </>
+            ) : (
+                <>
+                    <p>{text}</p>
+                    <button onClick={editHandler}>Izmeni</button>
+                    <button onClick={deleteHandler}>Obrisi</button>
+                </>
+            )}
         </div>
     )
 }
