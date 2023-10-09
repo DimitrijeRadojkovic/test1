@@ -12,15 +12,26 @@ function App(){
     const [toDo, setToDo] = useState([]);
 
 
-    const onSubmitHandler = e => {
+    const onSubmitHandler = async(e) => {
         e.preventDefault();
-        const newTask = {
+        /*const newTask = {
                 id: i++,
                 key: Math.floor(Math.random() * 256),
                 text: text,
                 bg:`rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`,
         }
-        setToDo(value =>  [...value, newTask]);
+        setToDo(value =>  [...value, newTask]);*/
+
+        const res = await fetch("http://baza.com/newTask.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "text= " + text
+        });
+        i++;
+        const json = await res.json();
+        console.log(json);
     }
 
     return (
