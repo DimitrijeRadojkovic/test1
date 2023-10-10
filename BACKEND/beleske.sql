@@ -27,6 +27,10 @@ SET time_zone = "+00:00";
 -- Table structure for table `beleske`
 --
 
+CREATE DATABASE beleske;
+
+USE beleske;
+
 CREATE TABLE `beleske` (
   `id` int(11) NOT NULL,
   `text` text NOT NULL

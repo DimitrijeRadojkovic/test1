@@ -1,6 +1,6 @@
 <?php
     require "connect.php";
-    header('Access-Control-Allow-Origin: http://localhost:3000');
+    header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $text = $_POST["text"];
