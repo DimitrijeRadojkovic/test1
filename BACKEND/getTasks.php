@@ -1,6 +1,6 @@
 <?php
     require "connect.php";
-    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Origin: http://localhost:3000');
     header('Content-Type: application/json');
     $sql = "SELECT * FROM beleske";
     $result = mysqli_query($conn, $sql);
@@ -15,4 +15,5 @@
           } else {
             echo "0 results";
           }
+      mysqli_close($conn);
 ?>

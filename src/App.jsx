@@ -22,7 +22,7 @@ function App(){
         }
         setToDo(value =>  [...value, newTask]);*/
 
-        const res = await fetch("http://www.baza.com/newTask.php", {
+        const res = await fetch("http://test1baza.com/newTask.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -40,9 +40,9 @@ function App(){
         
         
             async function getNotes(){
-                const res = await fetch("http://www.baza.com/getTasks.php");
+                const res = await fetch("http://test1baza.com/getTasks.php");
                 const json = await res.json();
-                console.log("tekst");
+                console.log(json);
                 for(let i = 0; i < json.length; i++){
                     addNote({
                         id: json[i].id,
@@ -60,7 +60,7 @@ function App(){
                 <div id="container">
                     {
                         toDo.map(x => {
-                            console.log(x)
+                            
                             return <ToDo
                                 key={x.key}
                                 id={x.id}
