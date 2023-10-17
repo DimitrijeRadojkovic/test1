@@ -6,21 +6,46 @@ const ToDo = ({id, text, bg}) => {
     const [isEditing, setEditing] = useState(false);
     const [editedText, setEditedText] = useState(text);
 
-    const deleteHandler = () => {
-        const updatedToDo = toDo.filter(x => x.id !== id);
-        setToDo(updatedToDo);
-        console.log(toDo);
+    const deleteHandler = async () => {
+        console.log("id koji se brise: " + id);
+        const res = await fetch("http://www.test1baza.com/deleteTask.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "id=" + id
+        });
+        const json = await res.json();
+        if(json.result){
+            console.log("uspesno obrisano");
+            const updatedToDo = toDo.filter(x => x.id !== id);
+            setToDo(updatedToDo);
+        }
+        else{
+            console.log("greska pri brisanju");
+        }
     }
 
     const editHandler = () => {
         setEditing(true);
     };
 
-    const saveEditHandler = () => {
+    const saveEditHandler = async () => {
         const updatedToDo = toDo.map(item =>
             item.id === id ? { ...item, text: editedText } : item
         );
         setToDo(updatedToDo);
+
+        const res = await fetch("http://www.test1baza.com/editTask.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "id=" + id + "&text=" + text
+        });
+        const json = await res.json();
+        console.log(json);
+
         setEditing(false);
     };
 
@@ -65,7 +90,7 @@ const ToDo = ({id, text, bg}) => {
                 <>
                     <p>{text}</p>
                     <button onClick={editHandler}>Izmeni</button>
-                    <button onClick={deleteHandler}>Obrisi</button>
+                    <button onClick={async () => {await deleteHandler()}}>Obrisi</button>
                 </>
             )}
         </div>

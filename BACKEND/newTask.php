@@ -5,8 +5,9 @@
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $text = $_POST["text"];
         $sql = "INSERT INTO beleske (text) VALUES ('$text')";
-        if(mysqli_query($conn, $sql)){
-            echo json_encode(array("ok" => true));
+        $result = mysqli_query($conn, $sql);
+        if($result){
+            echo json_encode(array("ok" => true, "result" => $result));
         } else {
             echo json_encode(array("ok" => false));
         }       

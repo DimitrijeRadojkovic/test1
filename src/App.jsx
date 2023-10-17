@@ -14,15 +14,9 @@ function App(){
 
     const onSubmitHandler = async(e) => {
         e.preventDefault();
-        /*const newTask = {
-                id: i++,
-                key: Math.floor(Math.random() * 256),
-                text: text,
-                bg:`rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`,
-        }
-        setToDo(value =>  [...value, newTask]);*/
+        
 
-        const res = await fetch("http://test1baza.com/newTask.php", {
+        const res = await fetch("http://www.test1baza.com/newTask.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -32,27 +26,36 @@ function App(){
         i++;
         const json = await res.json();
         console.log(json);
+        if(json.ok){
+            const newTask = {
+                id: i++,
+                key: toDo.length,
+                text: text,
+                bg:`rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`,
+            }
+            setToDo(value =>  [...value, newTask]);
+        }
     }
 
     const addNote = (newTask) => {
         setToDo(value =>  [...value, newTask]);
+    }   
+        
+    const getNotes = async () => {
+        const res = await fetch("http://www.test1baza.com/getTasks.php");
+        const json = await res.json();
+        console.log(json);
+        for(let i = 0; i < json.length; i++){
+            addNote({
+                id: json[i].id,
+                key: i,
+                text: json[i].text,
+                bg:`rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`,
+            });
+        }
     }
-        
-        
-            async function getNotes(){
-                const res = await fetch("http://test1baza.com/getTasks.php");
-                const json = await res.json();
-                console.log(json);
-                for(let i = 0; i < json.length; i++){
-                    addNote({
-                        id: json[i].id,
-                        key: Math.floor(Math.random() * 256),
-                        text: json[i].text,
-                        bg:`rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`,
-                    });
-                }
-            }
-            useEffect(() => {getNotes()}, []);      
+
+    useEffect(() => {getNotes()}, []);
 
     return (
         <main>
@@ -82,5 +85,6 @@ function App(){
 
 export {
     App,
-    ToDoContext
+    ToDoContext,
+    
 }
