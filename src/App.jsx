@@ -5,8 +5,6 @@ import "./style.css";
 
 const ToDoContext = createContext();
 
-let i = 0;
-
 function App(){
     const [text, setText] = useState("");
     const [toDo, setToDo] = useState([]);
@@ -23,12 +21,13 @@ function App(){
             },
             body: "text= " + text
         });
-        i++;
         const json = await res.json();
         console.log(json);
+        const res_g = await fetch("http://www.test1baza.com/getTasks.php");
+        const json_g = await res_g.json();
         if(json.ok){
             const newTask = {
-                id: i++,
+                id: json_g[json_g.length - 1].id + 1,
                 key: toDo.length,
                 text: text,
                 bg:`rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`,

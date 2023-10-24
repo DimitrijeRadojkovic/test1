@@ -5,7 +5,9 @@
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $id = $_POST["id"];
         $text = $_POST["text"];
-        $sql = "UPDATE beleske SET text =" . $text . " WHERE id=" . $id;
+        $sql = "UPDATE beleske
+        SET text=" . "'" . $text . "'" . 
+        " WHERE id=" . $id;
         $result = mysqli_query($conn, $sql);
         echo json_encode(array("result" => $result));
     }

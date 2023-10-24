@@ -41,7 +41,7 @@ const ToDo = ({id, text, bg}) => {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: "id=" + id + "&text=" + text
+            body: "id=" + id + "&text=" + editedText
         });
         const json = await res.json();
         console.log(json);
